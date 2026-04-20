@@ -1,10 +1,10 @@
-# Production-Ready Deployment Lab
+# Deployment Lab
 
-> **เวลารวม ~2.5 ชั่วโมง** | Kubernetes · Go · Docker · GitHub Actions · Prometheus · Grafana · k6
+> Kubernetes · Go · Docker · GitHub Actions · Prometheus · Grafana · k6
 
 ## โครงสร้างโฟลเดอร์
 
-```
+```text
 deployment/
 ├── .github/
 │   └── workflows/
@@ -26,6 +26,56 @@ deployment/
 │       └── api.hurl            # Hurl functional test
 ├── TROUBLESHOOTING.md          # Common errors & quick fixes
 └── README.md                   # คู่มือนี้
+```
+
+---
+
+## เครื่องมือที่ใช้ในการทำ Lab – Google Cloud Shell
+
+> Lab นี้ใช้ **Google Cloud Shell** เป็น Environment หลัก ไม่ต้องติดตั้งอะไรบนเครื่องตัวเอง
+
+### วิธีเข้าใช้ Google Cloud Shell
+
+1. เปิดเบราว์เซอร์แล้วไปที่ [https://ssh.cloud.google.com](https://ssh.cloud.google.com)
+2. Login ด้วย Google Account (ต้องเปิดใช้ Google Cloud Project ไว้ก่อน)
+3. รอจนหน้าจอ Terminal พร้อมใช้งาน (ประมาณ 10-30 วินาที)
+
+### ตรวจสอบ Tools ที่มีใน Cloud Shell
+
+```bash
+docker --version
+kubectl version --client
+go version
+git --version
+```
+
+> **หมายเหตุ:** Minikube และ k6 ต้องติดตั้งเพิ่มใน Cloud Shell ตามขั้นตอน Pre-requisites ด้านล่าง
+
+### ติดตั้ง Minikube บน Cloud Shell
+
+```bash
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+minikube version
+```
+
+### ติดตั้ง k6 บน Cloud Shell
+
+```bash
+sudo gpg -k
+sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg \
+  --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" \
+  | sudo tee /etc/apt/sources.list.d/k6.list
+sudo apt-get update && sudo apt-get install k6
+```
+
+### ติดตั้ง Hurl บน Cloud Shell
+
+```bash
+curl -LO https://github.com/Orange-OpenSource/hurl/releases/latest/download/hurl_amd64.deb
+sudo dpkg -i hurl_amd64.deb
+hurl --version
 ```
 
 ---
